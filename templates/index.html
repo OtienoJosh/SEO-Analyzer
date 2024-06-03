@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Analyzer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 50px; }
+        .container { max-width: 800px; }
+        .results { margin-top: 20px; }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('seoForm');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const url = formData.get('url');
+                fetch('/analyze', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('results').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">SEO Analyzer</h1>
+        <form id="seoForm" action="{{ url_for('analyze') }}" method="post" class="form-inline justify-content-center">
+            <input type="text" name="url" class="form-control mr-2" placeholder="Enter website URL" required>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+        <div id="results" class="results"></div>
+    </div>
+</body>
+</html>

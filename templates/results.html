@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Results</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">SEO Results for {{ url }}</h1>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Title:</strong> {{ seo_data.title }} (Length: {{ seo_data.title_length }})</li>
+            <li class="list-group-item"><strong>Meta Description:</strong> {{ seo_data.meta_description }}</li>
+            <li class="list-group-item"><strong>Meta Keywords:</strong> {{ seo_data.meta_keywords }}</li>
+            <li class="list-group-item"><strong>H1 Tags:</strong>
+                <ul>
+                    {% for h1 in seo_data.h1_tags %}
+                        <li>{{ h1 }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="list-group-item"><strong>Word Count:</strong> {{ seo_data.word_count }}</li>
+            <li class="list-group-item"><strong>Images with Alt Text:</strong> {{ seo_data.images_with_alt }} / {{ seo_data.total_images }}</li>
+            <li class="list-group-item"><strong>Internal Links:</strong> {{ seo_data.internal_links | length }}</li>
+            <li class="list-group-item"><strong>External Links:</strong> {{ seo_data.external_links | length }}</li>
+            <li class="list-group-item"><strong>Keyword Density ("flask"):</strong> {{ seo_data.keyword_density }}%</li>
+        </ul>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Analyze another URL</a>
+    </div>
+</body>
+</html>
